@@ -1,10 +1,10 @@
 :root {
   --primary: #3498db;
-  --primary-rgb: 52, 152, 219; /* RGB de #3498db */
+  --primary-rgb: 52, 152, 219;
   --dark: #2c3e50;
-  --dark-rgb: 44, 62, 80; /* RGB de #2c3e50 */
+  --dark-rgb: 44, 62, 80;
   --light: #ecf0f1;
-  --light-rgb: 236, 240, 241; /* RGB de #ecf0f1 */
+  --light-rgb: 236, 240, 241;
   --danger: #e74c3c;
   --text-dark: #333;
   --text-light: #f0f0f0;
@@ -43,9 +43,14 @@ header {
   border-bottom-color: #444;
 }
 
-h1 {
+h1,
+h2,
+h3 {
   margin: 0;
   color: var(--primary);
+}
+
+h1 {
   font-size: 1.8em;
 }
 
@@ -53,10 +58,9 @@ h1 i {
   margin-right: 10px;
 }
 
-/* Contenedor para los botones del header si hay más de uno */
 .header-actions {
   display: flex;
-  gap: 10px; /* Espacio entre los botones */
+  gap: 10px;
 }
 
 .settings-toggle,
@@ -64,7 +68,7 @@ h1 i {
   background-color: var(--dark);
   color: var(--text-light);
   border: none;
-  border-radius: 50%; /* Redondo */
+  border-radius: 50%;
   width: 40px;
   height: 40px;
   display: flex;
@@ -78,8 +82,8 @@ h1 i {
 
 .settings-toggle:hover,
 .theme-toggle:hover {
-  background-color: var(--primary); /* Cambia de color al pasar el mouse */
-  transform: rotate(30deg) scale(1.05); /* Ligeramente más grande y rotado */
+  background-color: var(--primary);
+  transform: rotate(30deg) scale(1.05);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
@@ -94,13 +98,13 @@ h1 i {
 
 .main-container {
   display: flex;
-  flex-wrap: wrap; /* Permite que las secciones se envuelvan en pantallas pequeñas */
-  gap: 20px; /* Espacio entre secciones */
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .player-section {
-  flex: 2; /* Ocupa más espacio en pantallas grandes */
-  min-width: 300px; /* Ancho mínimo para la sección del reproductor */
+  flex: 2;
+  min-width: 300px;
   background-color: var(--light);
   padding: 20px;
   border-radius: 10px;
@@ -112,128 +116,197 @@ h1 i {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
+/* Estilos mejorados del reproductor */
 .video-container {
   position: relative;
   width: 100%;
-  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-  background-color: black;
+  background-color: #000;
   border-radius: 8px;
   overflow: hidden;
   margin-bottom: 20px;
 }
 
+.video-container:hover .custom-controls {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 #video {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
-  background-color: black;
+  display: block;
 }
 
 .custom-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  padding: 15px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  opacity: 0;
+  transition: all 0.3s ease;
+  transform: translateY(10px);
+}
+
+.custom-controls:hover {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.controls-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.controls-left,
+.controls-right {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 0;
-  background-color: var(--light);
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  gap: 15px;
 }
 
-.dark-mode .custom-controls {
-  background-color: #333;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+.controls-left {
+  flex-grow: 1;
 }
 
-.custom-controls button {
+.control-btn {
   background: none;
   border: none;
-  color: var(--primary);
-  font-size: 1.5em;
+  color: #fff;
+  font-size: 18px;
   cursor: pointer;
   padding: 5px;
-  border-radius: 5px;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.custom-controls button:hover {
-  background-color: rgba(var(--primary-rgb), 0.2);
+.control-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
   transform: scale(1.1);
 }
 
 .progress-container {
-  flex-grow: 1;
-  height: 8px;
-  background-color: #ddd;
-  border-radius: 4px;
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
   cursor: pointer;
-  margin: 0 10px;
   position: relative;
-}
-
-.dark-mode .progress-container {
-  background-color: #555;
+  margin: 8px 0;
 }
 
 .progress-bar {
   height: 100%;
   width: 0%;
-  background-color: var(--primary);
-  border-radius: 4px;
+  background: var(--primary);
+  border-radius: 3px;
+  position: relative;
 }
 
-#currentTime,
-#duration {
-  font-size: 0.9em;
-  color: var(--text-dark);
+.progress-thumb {
+  position: absolute;
+  top: 50%;
+  right: -6px;
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
 }
 
-.dark-mode #currentTime,
-.dark-mode #duration {
-  color: var(--text-light);
+.progress-container:hover .progress-thumb {
+  opacity: 1;
 }
 
-#volumeSlider {
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.volume-slider {
   width: 80px;
-  cursor: pointer;
+  height: 4px;
+  opacity: 0;
+  transition: all 0.2s;
+  transform: scaleX(0.8);
+  transform-origin: left;
 }
 
-.load-options {
-  background-color: var(--light);
+.volume-control:hover .volume-slider {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.time-display {
+  color: #fff;
+  font-size: 14px;
+  font-family: monospace;
+  margin-left: 10px;
+}
+
+/* Estilos para pantalla completa */
+:fullscreen .video-container {
+  width: 100vw;
+  height: 100vh;
+  padding-bottom: 0;
+}
+
+:fullscreen #video {
+  object-fit: contain;
+}
+
+:fullscreen .custom-controls {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
 }
 
-.dark-mode .load-options {
-  background-color: var(--dark);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+/* Secciones de entrada */
+.stream-input-section,
+.m3u-input-section,
+.epg-input-section,
+.xtream-ui-section {
+  margin-bottom: 20px;
 }
 
 .input-group {
   display: flex;
-  flex-wrap: wrap; /* Permite que los inputs se apilen en pantallas pequeñas */
+  flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 15px;
   align-items: center;
 }
 
 .input-group input[type="text"],
-.input-group input[type="password"] {
-  flex: 1; /* Ocupa el espacio disponible */
+.input-group input[type="password"],
+.input-group input[type="number"] {
+  flex: 1;
   padding: 10px 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: white;
   color: var(--text-dark);
   font-size: 1em;
-  min-width: 150px; /* Ancho mínimo para inputs */
+  min-width: 150px;
 }
 
-.dark-mode .input-group input[type="text"],
-.dark-mode .input-group input[type="password"] {
+.dark-mode .input-group input {
   background-color: #3a3a3a;
   border-color: #555;
   color: var(--text-light);
@@ -251,7 +324,7 @@ h1 i {
   display: flex;
   align-items: center;
   gap: 5px;
-  white-space: nowrap; /* Evita que el texto del botón se rompa */
+  white-space: nowrap;
 }
 
 .input-group button:hover {
@@ -282,8 +355,8 @@ h1 i {
 }
 
 .playlist-section {
-  flex: 1; /* Ocupa el espacio restante */
-  min-width: 280px; /* Ancho mínimo para las listas */
+  flex: 1;
+  min-width: 280px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -294,7 +367,7 @@ h1 i {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  flex: 1; /* Para que ocupen el espacio disponible */
+  flex: 1;
 }
 
 .dark-mode .playlist {
@@ -320,7 +393,7 @@ h1 i {
 }
 
 .search-box {
-  width: calc(100% - 20px); /* Ajusta el ancho */
+  width: calc(100% - 20px);
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -336,12 +409,12 @@ h1 i {
 }
 
 .channel-list {
-  max-height: 400px; /* Altura máxima para las listas */
-  overflow-y: auto; /* Scroll si hay muchos canales */
-  padding-right: 5px; /* Espacio para el scrollbar */
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 5px;
 }
 
-/* Estilo para la barra de desplazamiento (web-kit browsers) */
+/* Estilo para la barra de desplazamiento */
 .channel-list::-webkit-scrollbar {
   width: 8px;
 }
@@ -373,7 +446,7 @@ h1 i {
   align-items: center;
   font-weight: bold;
   font-size: 1.1em;
-  user-select: none; /* Evita selección de texto al hacer doble click */
+  user-select: none;
   border-bottom: 1px solid #ddd;
   transition: all 0.2s ease-in-out;
 }
@@ -397,21 +470,17 @@ h1 i {
 }
 
 .group-header.collapsed i {
-  transform: rotate(-90deg); /* Flecha hacia abajo cuando está colapsado */
+  transform: rotate(-90deg);
 }
 
 .group-content {
   padding: 10px 0;
-  overflow: hidden; /* Para animaciones futuras (height) */
-  /* display: block; o none, se maneja con JS */
-  /* transicion de max-height se puede aplicar si se maneja asi, sino se usa display none/block */
-  /* max-height: 0; cuando colapsado, max-content cuando expandido */
-  /* transition: max-height 0.3s ease-out; */
+  overflow: hidden;
 }
 
 .channel-item {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   padding: 10px;
   margin-bottom: 8px;
   background-color: white;
@@ -419,8 +488,8 @@ h1 i {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  opacity: 0; /* Por defecto oculto para que la animación funcione */
-  animation: fadeIn 0.3s forwards; /* Aplica la animación */
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
 }
 
 .dark-mode .channel-item {
@@ -428,13 +497,9 @@ h1 i {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Efecto hover para elementos de canal */
 .channel-item:hover {
-  background-color: rgba(
-    var(--primary-rgb),
-    0.1
-  ); /* Ligero fondo al pasar el mouse */
-  transform: translateX(5px); /* Un pequeño desplazamiento */
+  background-color: rgba(var(--primary-rgb), 0.1);
+  transform: translateX(5px);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 .dark-mode .channel-item:hover {
@@ -442,21 +507,26 @@ h1 i {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-/* Resaltar el canal activo con una animación sutil */
 .channel-item.active {
   background-color: var(--primary);
   color: white;
   font-weight: bold;
-  transform: scale(1.02); /* Ligeramente más grande */
+  transform: scale(1.02);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  border-radius: 8px; /* Bordes más suaves */
+  border-radius: 8px;
 }
 .dark-mode .channel-item.active {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 }
 .channel-item.active .channel-name,
 .channel-item.active .channel-logo {
-  color: white !important; /* Asegura el color del texto y logo */
+  color: white !important;
+}
+
+.channel-info {
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .channel-logo {
@@ -465,7 +535,7 @@ h1 i {
   object-fit: contain;
   margin-right: 10px;
   border-radius: 5px;
-  flex-shrink: 0; /* Evita que la imagen se encoja */
+  flex-shrink: 0;
 }
 
 .channel-logo-placeholder {
@@ -489,9 +559,9 @@ h1 i {
 
 .channel-name {
   flex-grow: 1;
-  white-space: nowrap; /* Evita que el nombre del canal se rompa */
+  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* Añade puntos suspensivos si el texto es muy largo */
+  text-overflow: ellipsis;
   color: var(--text-dark);
 }
 
@@ -505,7 +575,66 @@ h1 i {
   padding: 20px;
 }
 
-/* Modal Styling (general, applies to messageModal and settingsModal) */
+/* ESTILOS PARA EPG */
+.channel-epg {
+  width: 100%;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed #ddd;
+  font-size: 0.9em;
+  color: #555;
+}
+.dark-mode .channel-epg {
+  border-top-color: #444;
+  color: #bbb;
+}
+
+.channel-item.active .channel-epg {
+  color: #fff;
+  border-top-color: rgba(255, 255, 255, 0.5);
+}
+
+.epg-item {
+  margin-bottom: 5px;
+}
+
+.epg-item .epg-time {
+  font-weight: bold;
+  margin-right: 5px;
+  color: var(--primary);
+}
+
+.channel-item.active .epg-item .epg-time {
+  color: #fff;
+}
+
+.epg-progress-container {
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  height: 6px;
+  margin-top: 2px;
+  overflow: hidden;
+}
+.dark-mode .epg-progress-container {
+  background-color: #555;
+}
+
+.epg-progress {
+  background-color: var(--primary);
+  height: 100%;
+  width: 0%;
+  border-radius: 4px;
+}
+
+.channel-item.active .epg-progress-container {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.channel-item.active .epg-progress {
+  background-color: #fff;
+}
+
+/* Modales */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -536,7 +665,7 @@ h1 i {
   width: 90%;
   position: relative;
   text-align: center;
-  transform: translateY(-20px); /* Para la animación de entrada */
+  transform: translateY(-20px);
   transition: transform 0.3s ease-out;
 }
 
@@ -625,7 +754,6 @@ h1 i {
   z-index: 1001;
   color: white;
   font-size: 1.2rem;
-  /* Por defecto oculto, JS lo mostrará */
   display: none;
   opacity: 0;
   visibility: hidden;
@@ -648,12 +776,22 @@ h1 i {
 
 .loading-overlay .spinner {
   border: 4px solid rgba(255, 255, 255, 0.3);
-  border-top: 4px solid var(--primary); /* Color primario para el spinner */
+  border-top: 4px solid var(--primary);
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  animation: spin 1s linear infinite; /* Animación de giro */
+  animation: spin 1s linear infinite, pulse 1.5s ease-in-out infinite;
   margin-bottom: 15px;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 /* Estilos específicos del modal de configuración */
@@ -709,7 +847,7 @@ h1 i {
 }
 
 .setting-item input[type="checkbox"] {
-  transform: scale(1.3); /* Checkbox un poco más grande */
+  transform: scale(1.3);
   cursor: pointer;
 }
 
@@ -746,18 +884,6 @@ h1 i {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Para el botón de alternar tema dentro del modal */
-#modalThemeToggle {
-  width: auto; /* Permite que el botón se ajuste al contenido */
-  border-radius: 5px; /* Más rectangular */
-  padding: 8px 15px;
-  font-size: 1em;
-}
-
-#modalThemeToggle i {
-  margin-right: 5px;
-}
-
 /* Animaciones */
 @keyframes fadeIn {
   from {
@@ -791,7 +917,7 @@ h1 i {
   .input-group button,
   .file-label {
     width: 100%;
-    box-sizing: border-box; /* Incluye padding y border en el ancho */
+    box-sizing: border-box;
   }
 
   .custom-controls {

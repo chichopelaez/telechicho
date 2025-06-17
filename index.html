@@ -32,28 +32,39 @@
           <div class="video-container">
             <video id="video"></video>
             <div class="custom-controls">
-              <button id="playBtn"><i class="fas fa-play"></i></button>
-              <button id="pauseBtn" style="display: none">
-                <i class="fas fa-pause"></i>
-              </button>
+              <div class="controls-container">
+                <div class="controls-left">
+                  <button id="playPauseBtn" class="control-btn">
+                    <i class="fas fa-play"></i>
+                  </button>
+                  <div class="volume-control">
+                    <button id="volumeBtn" class="control-btn">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                    <input
+                      type="range"
+                      id="volumeSlider"
+                      min="0"
+                      max="100"
+                      value="100"
+                      class="volume-slider"
+                    />
+                  </div>
+                  <div class="time-display">
+                    <span id="currentTime">00:00</span> /
+                    <span id="duration">00:00</span>
+                  </div>
+                </div>
+                <div class="controls-right">
+                  <button id="fullscreenBtn" class="control-btn">
+                    <i class="fas fa-expand"></i>
+                  </button>
+                </div>
+              </div>
               <div class="progress-container" id="progressContainer">
                 <div class="progress-bar" id="progressBar"></div>
+                <div class="progress-thumb" id="progressThumb"></div>
               </div>
-              <span class="time" id="currentTime">00:00</span> /
-              <span class="time" id="duration">00:00</span>
-              <div class="volume-control">
-                <button id="volumeBtn"><i class="fas fa-volume-up"></i></button>
-                <input
-                  type="range"
-                  id="volumeSlider"
-                  min="0"
-                  max="100"
-                  value="100"
-                />
-              </div>
-              <button id="fullscreenBtn">
-                <i class="fas fa-expand"></i>
-              </button>
             </div>
           </div>
 
@@ -65,7 +76,9 @@
                 id="streamUrl"
                 placeholder="Ingresa la URL del stream (ej: .m3u8, .mp4)"
               />
-              <button id="loadBtn"><i class="fas fa-play-circle"></i> Cargar</button>
+              <button id="loadBtn">
+                <i class="fas fa-play-circle"></i> Cargar
+              </button>
             </div>
           </div>
 
@@ -89,6 +102,23 @@
             </div>
           </div>
 
+          <div class="epg-input-section">
+            <h2>
+              <i class="fas fa-calendar-alt"></i> Cargar Guía de Programación
+              (EPG)
+            </h2>
+            <div class="input-group">
+              <input
+                type="text"
+                id="epgUrl"
+                placeholder="URL del archivo XMLTV (ej: http://ejemplo.com/epg.xml)"
+              />
+              <button id="loadEpgBtn">
+                <i class="fas fa-sync-alt"></i> Cargar EPG
+              </button>
+            </div>
+          </div>
+
           <div class="xtream-ui-section">
             <h2><i class="fas fa-server"></i> Cargar desde Xtream UI</h2>
             <div class="input-group">
@@ -97,11 +127,7 @@
                 id="xtreamServerUrl"
                 placeholder="URL del servidor Xtream (ej: http://dominio.com:puerto)"
               />
-              <input
-                type="text"
-                id="xtreamUsername"
-                placeholder="Usuario"
-              />
+              <input type="text" id="xtreamUsername" placeholder="Usuario" />
               <input
                 type="password"
                 id="xtreamPassword"
@@ -165,7 +191,9 @@
         <div class="settings-group">
           <h3>Reproductor</h3>
           <div class="setting-item">
-            <label for="autoplayToggle">Autoplay al cargar la aplicación:</label>
+            <label for="autoplayToggle"
+              >Autoplay al cargar la aplicación:</label
+            >
             <input type="checkbox" id="autoplayToggle" />
           </div>
           <div class="setting-item">
@@ -242,7 +270,10 @@
           navigator.serviceWorker
             .register("/service-worker.js")
             .then((registration) => {
-              console.log("ServiceWorker registrado con éxito:", registration.scope);
+              console.log(
+                "ServiceWorker registrado con éxito:",
+                registration.scope
+              );
             })
             .catch((error) => {
               console.log("Fallo el registro de ServiceWorker:", error);
