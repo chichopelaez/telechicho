@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IPTV Pro Player</title>
+    <link rel="icon" href="images/favicon.png" type="image/png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#2c3e50" />
+  </head>
+  <body>
+    <div class="app">
+      <header>
+        <h1><i class="fas fa-tv"></i> IPTV Pro Player</h1>
+        <div class="header-actions">
+          <button class="settings-toggle" id="settingsToggle">
+            <i class="fas fa-cog"></i>
+          </button>
+          <button class="theme-toggle" id="themeToggle">
+            <i class="fas fa-moon"></i>
+          </button>
+        </div>
+      </header>
+
+      <div class="main-container">
+        <div class="player-section">
+          <div class="video-container">
+            <video id="video"></video>
+            <div class="custom-controls">
+              <button id="playBtn"><i class="fas fa-play"></i></button>
+              <button id="pauseBtn" style="display: none">
+                <i class="fas fa-pause"></i>
+              </button>
+              <div class="progress-container" id="progressContainer">
+                <div class="progress-bar" id="progressBar"></div>
+              </div>
+              <span class="time" id="currentTime">00:00</span> /
+              <span class="time" id="duration">00:00</span>
+              <div class="volume-control">
+                <button id="volumeBtn"><i class="fas fa-volume-up"></i></button>
+                <input
+                  type="range"
+                  id="volumeSlider"
+                  min="0"
+                  max="100"
+                  value="100"
+                />
+              </div>
+              <button id="fullscreenBtn">
+                <i class="fas fa-expand"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="stream-input-section">
+            <h2><i class="fas fa-wifi"></i> Cargar Stream Directo</h2>
+            <div class="input-group">
+              <input
+                type="text"
+                id="streamUrl"
+                placeholder="Ingresa la URL del stream (ej: .m3u8, .mp4)"
+              />
+              <button id="loadBtn"><i class="fas fa-play-circle"></i> Cargar</button>
+            </div>
+          </div>
+
+          <div class="m3u-input-section">
+            <h2><i class="fas fa-file-import"></i> Cargar Lista M3U</h2>
+            <div class="input-group">
+              <input
+                type="text"
+                id="m3uUrl"
+                placeholder="URL de la lista M3U (ej: http://ejemplo.com/lista.m3u)"
+              />
+              <button id="loadM3UUrlBtn">
+                <i class="fas fa-cloud-download-alt"></i> Cargar desde URL
+              </button>
+            </div>
+            <div class="input-group">
+              <input type="file" id="m3uFile" accept=".m3u,.m3u8" />
+              <button id="loadM3UFileBtn">
+                <i class="fas fa-folder-open"></i> Cargar desde Archivo
+              </button>
+            </div>
+          </div>
+
+          <div class="xtream-ui-section">
+            <h2><i class="fas fa-server"></i> Cargar desde Xtream UI</h2>
+            <div class="input-group">
+              <input
+                type="text"
+                id="xtreamServerUrl"
+                placeholder="URL del servidor Xtream (ej: http://dominio.com:puerto)"
+              />
+              <input
+                type="text"
+                id="xtreamUsername"
+                placeholder="Usuario"
+              />
+              <input
+                type="password"
+                id="xtreamPassword"
+                placeholder="Contraseña"
+              />
+              <button id="loadXtreamUiBtn">
+                <i class="fas fa-sign-in-alt"></i> Iniciar Sesión y Cargar
+              </button>
+            </div>
+          </div>
+
+          <div class="settings-option">
+            <button id="exportM3UBtn" style="width: 100%">
+              <i class="fas fa-download"></i> Exportar M3U Actual
+            </button>
+          </div>
+        </div>
+
+        <div class="playlist-section">
+          <div class="playlist">
+            <h2><i class="fas fa-list"></i> Lista de Canales</h2>
+            <input
+              type="text"
+              id="searchChannel"
+              class="search-box"
+              placeholder="Buscar canal..."
+            />
+            <div class="channel-list" id="channelList"></div>
+          </div>
+
+          <div class="playlist" style="margin-top: 20px">
+            <h2><i class="fas fa-history"></i> Recientes</h2>
+            <div class="channel-list" id="recentList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="modalOverlay" class="modal-overlay">
+      <div class="modal-content">
+        <button class="close-button" id="closeModal">
+          <i class="fas fa-times"></i>
+        </button>
+        <p id="modalMessage"></p>
+        <button class="modal-ok-button" id="modalOkButton">OK</button>
+      </div>
+    </div>
+
+    <div id="loadingOverlay" class="loading-overlay">
+      <div class="spinner"></div>
+      <p id="loadingMessage">Cargando...</p>
+    </div>
+
+    <div id="settingsModal" class="modal-overlay">
+      <div class="modal-content">
+        <button class="close-button" id="closeSettingsModal">
+          <i class="fas fa-times"></i>
+        </button>
+        <h2><i class="fas fa-cog"></i> Configuración</h2>
+
+        <div class="settings-group">
+          <h3>Reproductor</h3>
+          <div class="setting-item">
+            <label for="autoplayToggle">Autoplay al cargar la aplicación:</label>
+            <input type="checkbox" id="autoplayToggle" />
+          </div>
+          <div class="setting-item">
+            <label for="rememberLastChannelToggle"
+              >Recordar último canal reproducido:</label
+            >
+            <input type="checkbox" id="rememberLastChannelToggle" />
+          </div>
+          <div class="setting-item">
+            <label for="volumePersistenceToggle"
+              >Recordar último nivel de volumen:</label
+            >
+            <input type="checkbox" id="volumePersistenceToggle" />
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <h3>Lista de Canales</h3>
+          <div class="setting-item">
+            <label for="recentChannelsLimit"
+              >Límite de canales recientes:</label
+            >
+            <input
+              type="number"
+              id="recentChannelsLimit"
+              min="1"
+              max="50"
+              value="10"
+            />
+          </div>
+          <div class="setting-item">
+            <label for="clearRecentChannelsBtn"
+              >Borrar canales recientes:</label
+            >
+            <button id="clearRecentChannelsBtn" class="danger-button">
+              <i class="fas fa-trash"></i> Borrar
+            </button>
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <h3>Interfaz</h3>
+          <div class="setting-item">
+            <label>Tema:</label>
+            <button id="modalThemeToggle" class="theme-toggle">
+              <i class="fas fa-moon"></i>
+            </button>
+          </div>
+          <div class="setting-item">
+            <label for="expandGroupsByDefault"
+              >Expandir grupos por defecto:</label
+            >
+            <input type="checkbox" id="expandGroupsByDefault" />
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button id="saveSettingsBtn" class="modal-ok-button">
+            <i class="fas fa-save"></i> Guardar Cambios
+          </button>
+          <button id="resetSettingsBtn" class="modal-ok-button danger-button">
+            <i class="fas fa-undo"></i> Restablecer
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script src="script.js"></script>
+
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/service-worker.js")
+            .then((registration) => {
+              console.log("ServiceWorker registrado con éxito:", registration.scope);
+            })
+            .catch((error) => {
+              console.log("Fallo el registro de ServiceWorker:", error);
+            });
+        });
+      }
+    </script>
+  </body>
+</html>

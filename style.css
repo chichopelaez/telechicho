@@ -1,0 +1,819 @@
+:root {
+  --primary: #3498db;
+  --primary-rgb: 52, 152, 219; /* RGB de #3498db */
+  --dark: #2c3e50;
+  --dark-rgb: 44, 62, 80; /* RGB de #2c3e50 */
+  --light: #ecf0f1;
+  --light-rgb: 236, 240, 241; /* RGB de #ecf0f1 */
+  --danger: #e74c3c;
+  --text-dark: #333;
+  --text-light: #f0f0f0;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+  color: var(--text-dark);
+  transition: background 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+  background-color: #1a1a1a;
+  color: var(--text-light);
+}
+
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.dark-mode header {
+  border-bottom-color: #444;
+}
+
+h1 {
+  margin: 0;
+  color: var(--primary);
+  font-size: 1.8em;
+}
+
+h1 i {
+  margin-right: 10px;
+}
+
+/* Contenedor para los botones del header si hay más de uno */
+.header-actions {
+  display: flex;
+  gap: 10px; /* Espacio entre los botones */
+}
+
+.settings-toggle,
+.theme-toggle {
+  background-color: var(--dark);
+  color: var(--text-light);
+  border: none;
+  border-radius: 50%; /* Redondo */
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.2em;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease-in-out;
+}
+
+.settings-toggle:hover,
+.theme-toggle:hover {
+  background-color: var(--primary); /* Cambia de color al pasar el mouse */
+  transform: rotate(30deg) scale(1.05); /* Ligeramente más grande y rotado */
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .settings-toggle,
+.dark-mode .theme-toggle {
+  background-color: #333;
+}
+.dark-mode .settings-toggle:hover,
+.dark-mode .theme-toggle:hover {
+  background-color: var(--primary);
+}
+
+.main-container {
+  display: flex;
+  flex-wrap: wrap; /* Permite que las secciones se envuelvan en pantallas pequeñas */
+  gap: 20px; /* Espacio entre secciones */
+}
+
+.player-section {
+  flex: 2; /* Ocupa más espacio en pantallas grandes */
+  min-width: 300px; /* Ancho mínimo para la sección del reproductor */
+  background-color: var(--light);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .player-section {
+  background-color: var(--dark);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  background-color: black;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+#video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+}
+
+.custom-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  background-color: var(--light);
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.dark-mode .custom-controls {
+  background-color: #333;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.custom-controls button {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 1.5em;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  transition: all 0.2s ease-in-out;
+}
+
+.custom-controls button:hover {
+  background-color: rgba(var(--primary-rgb), 0.2);
+  transform: scale(1.1);
+}
+
+.progress-container {
+  flex-grow: 1;
+  height: 8px;
+  background-color: #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 10px;
+  position: relative;
+}
+
+.dark-mode .progress-container {
+  background-color: #555;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background-color: var(--primary);
+  border-radius: 4px;
+}
+
+#currentTime,
+#duration {
+  font-size: 0.9em;
+  color: var(--text-dark);
+}
+
+.dark-mode #currentTime,
+.dark-mode #duration {
+  color: var(--text-light);
+}
+
+#volumeSlider {
+  width: 80px;
+  cursor: pointer;
+}
+
+.load-options {
+  background-color: var(--light);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.dark-mode .load-options {
+  background-color: var(--dark);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.input-group {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los inputs se apilen en pantallas pequeñas */
+  gap: 10px;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.input-group input[type="text"],
+.input-group input[type="password"] {
+  flex: 1; /* Ocupa el espacio disponible */
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  color: var(--text-dark);
+  font-size: 1em;
+  min-width: 150px; /* Ancho mínimo para inputs */
+}
+
+.dark-mode .input-group input[type="text"],
+.dark-mode .input-group input[type="password"] {
+  background-color: #3a3a3a;
+  border-color: #555;
+  color: var(--text-light);
+}
+
+.input-group button {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap; /* Evita que el texto del botón se rompa */
+}
+
+.input-group button:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.file-upload {
+  position: relative;
+}
+
+.file-label {
+  background-color: #6c757d;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+}
+
+.file-label:hover {
+  background-color: #5a6268;
+}
+
+.playlist-section {
+  flex: 1; /* Ocupa el espacio restante */
+  min-width: 280px; /* Ancho mínimo para las listas */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.playlist {
+  background-color: var(--light);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  flex: 1; /* Para que ocupen el espacio disponible */
+}
+
+.dark-mode .playlist {
+  background-color: var(--dark);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.playlist h2 {
+  margin-top: 0;
+  color: var(--primary);
+  font-size: 1.5em;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.dark-mode .playlist h2 {
+  border-bottom-color: #444;
+}
+
+.playlist h2 i {
+  margin-right: 8px;
+}
+
+.search-box {
+  width: calc(100% - 20px); /* Ajusta el ancho */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  background-color: white;
+  color: var(--text-dark);
+}
+
+.dark-mode .search-box {
+  background-color: #3a3a3a;
+  border-color: #555;
+  color: var(--text-light);
+}
+
+.channel-list {
+  max-height: 400px; /* Altura máxima para las listas */
+  overflow-y: auto; /* Scroll si hay muchos canales */
+  padding-right: 5px; /* Espacio para el scrollbar */
+}
+
+/* Estilo para la barra de desplazamiento (web-kit browsers) */
+.channel-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.channel-list::-webkit-scrollbar-track {
+  background: var(--light);
+  border-radius: 10px;
+}
+.dark-mode .channel-list::-webkit-scrollbar-track {
+  background: #333;
+}
+
+.channel-list::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 10px;
+}
+
+.channel-list::-webkit-scrollbar-thumb:hover {
+  background: #2980b9;
+}
+
+.group-header {
+  cursor: pointer;
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #eee;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.1em;
+  user-select: none; /* Evita selección de texto al hacer doble click */
+  border-bottom: 1px solid #ddd;
+  transition: all 0.2s ease-in-out;
+}
+
+.dark-mode .group-header {
+  background-color: #333;
+  border-bottom-color: #555;
+  color: var(--text-light);
+}
+
+.group-header:hover {
+  background-color: #e0e0e0;
+}
+.dark-mode .group-header:hover {
+  background-color: #444;
+}
+
+.group-header i {
+  margin-right: 10px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.group-header.collapsed i {
+  transform: rotate(-90deg); /* Flecha hacia abajo cuando está colapsado */
+}
+
+.group-content {
+  padding: 10px 0;
+  overflow: hidden; /* Para animaciones futuras (height) */
+  /* display: block; o none, se maneja con JS */
+  /* transicion de max-height se puede aplicar si se maneja asi, sino se usa display none/block */
+  /* max-height: 0; cuando colapsado, max-content cuando expandido */
+  /* transition: max-height 0.3s ease-out; */
+}
+
+.channel-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 8px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  opacity: 0; /* Por defecto oculto para que la animación funcione */
+  animation: fadeIn 0.3s forwards; /* Aplica la animación */
+}
+
+.dark-mode .channel-item {
+  background-color: #2b2b2b;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Efecto hover para elementos de canal */
+.channel-item:hover {
+  background-color: rgba(
+    var(--primary-rgb),
+    0.1
+  ); /* Ligero fondo al pasar el mouse */
+  transform: translateX(5px); /* Un pequeño desplazamiento */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.dark-mode .channel-item:hover {
+  background-color: rgba(var(--primary-rgb), 0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Resaltar el canal activo con una animación sutil */
+.channel-item.active {
+  background-color: var(--primary);
+  color: white;
+  font-weight: bold;
+  transform: scale(1.02); /* Ligeramente más grande */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 8px; /* Bordes más suaves */
+}
+.dark-mode .channel-item.active {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+.channel-item.active .channel-name,
+.channel-item.active .channel-logo {
+  color: white !important; /* Asegura el color del texto y logo */
+}
+
+.channel-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  margin-right: 10px;
+  border-radius: 5px;
+  flex-shrink: 0; /* Evita que la imagen se encoja */
+}
+
+.channel-logo-placeholder {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ccc;
+  color: #666;
+  border-radius: 5px;
+  margin-right: 10px;
+  font-size: 1.5em;
+  flex-shrink: 0;
+}
+
+.dark-mode .channel-logo-placeholder {
+  background-color: #555;
+  color: #aaa;
+}
+
+.channel-name {
+  flex-grow: 1;
+  white-space: nowrap; /* Evita que el nombre del canal se rompa */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Añade puntos suspensivos si el texto es muy largo */
+  color: var(--text-dark);
+}
+
+.dark-mode .channel-name {
+  color: var(--text-light);
+}
+
+.no-results {
+  text-align: center;
+  color: #777;
+  padding: 20px;
+}
+
+/* Modal Styling (general, applies to messageModal and settingsModal) */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background-color: var(--light);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+  text-align: center;
+  transform: translateY(-20px); /* Para la animación de entrada */
+  transition: transform 0.3s ease-out;
+}
+
+.modal-overlay.active .modal-content {
+  transform: translateY(0);
+}
+
+.dark-mode .modal-content {
+  background-color: var(--dark);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
+}
+
+.modal-content h2 {
+  color: var(--primary);
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.6em;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+.dark-mode .modal-content h2 {
+  border-bottom-color: #555;
+}
+
+.modal-content p {
+  font-size: 1.1em;
+  margin-bottom: 25px;
+  color: var(--text-dark);
+}
+
+.dark-mode .modal-content p {
+  color: var(--text-light);
+}
+
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: #888;
+  transition: color 0.2s;
+}
+
+.close-button:hover {
+  color: var(--danger);
+}
+
+.dark-mode .close-button {
+  color: #aaa;
+}
+
+.dark-mode .close-button:hover {
+  color: #fff;
+}
+
+.modal-ok-button {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.2s;
+}
+
+.modal-ok-button:hover {
+  background-color: #2980b9;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+  color: white;
+  font-size: 1.2rem;
+  /* Por defecto oculto, JS lo mostrará */
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.loading-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-overlay .spinner {
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid var(--primary); /* Color primario para el spinner */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite; /* Animación de giro */
+  margin-bottom: 15px;
+}
+
+/* Estilos específicos del modal de configuración */
+.settings-group {
+  margin-bottom: 25px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.dark-mode .settings-group {
+  border-color: #444;
+  background-color: #2b2b2b;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.settings-group h3 {
+  margin-top: 0;
+  color: var(--primary);
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+.dark-mode .settings-group h3 {
+  border-bottom-color: #555;
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed #eee;
+}
+
+.dark-mode .setting-item {
+  border-bottom-color: #3a3a3a;
+}
+
+.setting-item:last-child {
+  margin-bottom: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.setting-item label {
+  flex-grow: 1;
+  margin-right: 15px;
+  font-weight: 500;
+}
+
+.setting-item input[type="checkbox"] {
+  transform: scale(1.3); /* Checkbox un poco más grande */
+  cursor: pointer;
+}
+
+.setting-item input[type="number"] {
+  width: 60px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  color: var(--text-dark);
+}
+
+.dark-mode .setting-item input[type="number"] {
+  background-color: #3a3a3a;
+  border-color: #555;
+  color: var(--text-light);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.danger-button {
+  background-color: var(--danger);
+  color: white;
+}
+
+.danger-button:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Para el botón de alternar tema dentro del modal */
+#modalThemeToggle {
+  width: auto; /* Permite que el botón se ajuste al contenido */
+  border-radius: 5px; /* Más rectangular */
+  padding: 8px 15px;
+  font-size: 1em;
+}
+
+#modalThemeToggle i {
+  margin-right: 5px;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .main-container {
+    flex-direction: column;
+  }
+
+  .player-section,
+  .playlist-section {
+    flex: none;
+    width: 100%;
+  }
+
+  .input-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .input-group input,
+  .input-group button,
+  .file-label {
+    width: 100%;
+    box-sizing: border-box; /* Incluye padding y border en el ancho */
+  }
+
+  .custom-controls {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  #volumeSlider {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .app {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 1.5em;
+  }
+
+  .playlist h2 {
+    font-size: 1.3em;
+  }
+}
